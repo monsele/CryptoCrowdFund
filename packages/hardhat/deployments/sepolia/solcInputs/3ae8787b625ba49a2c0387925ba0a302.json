@@ -1,0 +1,39 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Common.sol": {
+      "content": "// SPDX-License-Identifier: SEE LICENSE IN LICENSE\r\npragma solidity ^0.8.0;\r\n\r\n struct Campaingn {\r\n        uint256 Id;\r\n        string Name;\r\n        string Description;\r\n        uint256 Goal;\r\n        address payable DepositAddress;\r\n        bool Open;\r\n    }"
+    },
+    "contracts/CrowdFund.sol": {
+      "content": "// SPDX-License-Identifier: MIT\r\n// Layout of Contract:\r\n// version\r\n// imports\r\n// errors\r\n// interfaces, libraries, contracts\r\n// Type declarations\r\n// State variables\r\n// Events\r\n// Modifiers\r\n// Functions\r\n\r\n// Layout of Functions:\r\n// constructor\r\n// receive function (if exists)\r\n// fallback function (if exists)\r\n// external\r\n// public\r\n// internal\r\n// private\r\n// view & pure functions\r\n\r\npragma solidity ^0.8.20;\r\n\r\nimport {Campaingn} from './Common.sol';\r\n\r\ncontract CrowdFund {\r\n    error CampaingnNotFound();\r\n    error Insufficient_Balance();\r\n    error Decimals_Exceeded();\r\n    error Transfer_Failed();\r\n\r\n    address public owner;\r\n    Campaingn[] private CampaingnList;\r\n    mapping(uint256 => Campaingn) private CampaingnMapping;\r\n    mapping(uint256 Id => uint256 Deposits) private CampaingnDeposits;\r\n    uint256 private lastId;\r\n\r\n    event Transfer(address indexed from, address indexed to, uint256 amount);\r\n    event paidCampaign(address indexed reciever, uint256 amountPaid);\r\n\r\n    modifier onlyOwner() {\r\n        require(msg.sender == owner);\r\n        _;\r\n    }\r\n\r\n    constructor() {\r\n        lastId = 0;\r\n        owner =  0x90139066A44A0eD1E335CA08fdC0218eaE8D7C7f; // Set the owner in the constructor\r\n        //owner = msg.sender; // Set the owner in the constructor\r\n    }\r\n\r\n    function fundCampaign(uint256 id) public payable returns (bool) {\r\n        //find the campaign\r\n        Campaingn memory receiveingCamp = CampaingnMapping[id];\r\n        if (receiveingCamp.Id == 0) {\r\n            revert CampaingnNotFound();\r\n        }\r\n        if (msg.value == 0) {\r\n            revert Insufficient_Balance();\r\n        }\r\n        CampaingnDeposits[id] += msg.value;\r\n        return true;\r\n    }\r\n\r\n    function CreateCampaign(\r\n        string memory name,\r\n        string memory description,\r\n        uint256 goal,\r\n        address payable depositAddress\r\n    ) external returns (bool) {\r\n        uint256 id = incrementandReturnId();\r\n\r\n        Campaingn memory campaign = Campaingn(lastId, name, description, goal, depositAddress, true);\r\n        CampaingnList.push(campaign);\r\n        CampaingnMapping[id] = campaign;\r\n        CampaingnDeposits[id] = 0;\r\n        return true;\r\n    }\r\n\r\n     function payCampaign(uint256 id) public payable returns (bool) {\r\n        Campaingn memory receiveingCamp = CampaingnMapping[id];\r\n        if (receiveingCamp.Id == 0) {\r\n            revert CampaingnNotFound();\r\n        }\r\n        uint256 depositedAmt = CampaingnDeposits[id];\r\n        if (address(this).balance <= depositedAmt) {\r\n            revert Insufficient_Balance();\r\n        }\r\n        //receiveingCamp.DepositAddress.transfer(depositedAmt);\r\n        address receiver= receiveingCamp.DepositAddress;\r\n          (bool sent, bytes memory data) = payable(receiver).call{value: depositedAmt}(\"\");\r\n        emit paidCampaign(receiveingCamp.DepositAddress, depositedAmt);\r\n        if(!sent){\r\n            revert Transfer_Failed();\r\n        }\r\n        CampaingnDeposits[id]=0;\r\n        return true;\r\n    }\r\n\r\n    function getCampaignDeposit(uint256 id) external view returns (uint256) {\r\n        return CampaingnDeposits[id];\r\n    }\r\n\r\n    function getContractBalance() public view returns (uint256) {\r\n        return address(this).balance;\r\n    }\r\n\r\n    function GetCampaigns() external view returns (Campaingn[] memory) {\r\n        return CampaingnList;\r\n    }\r\n\r\n    function GetCampaingnLength() public view returns (uint256) {\r\n        return CampaingnList.length;\r\n    }\r\n\r\n    function GetCampaingn(uint256 id) public view returns (Campaingn memory) {\r\n        return CampaingnMapping[id];\r\n    }\r\n\r\n    function GetLastId() public view returns (uint256) {\r\n        return lastId;\r\n    }\r\n\r\n    function incrementandReturnId() private returns (uint256) {\r\n        lastId++;\r\n        return lastId;\r\n    }\r\n\r\n \r\n}\r\n\r\n\r\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

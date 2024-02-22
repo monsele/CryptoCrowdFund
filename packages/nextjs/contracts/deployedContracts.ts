@@ -4,6 +4,639 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    CrowdFund: {
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CampaingnNotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Decimals_Exceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Insufficient_Balance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Transfer_Failed",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "reciever",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaid",
+              type: "uint256",
+            },
+          ],
+          name: "paidCampaign",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "description",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "goal",
+              type: "uint256",
+            },
+            {
+              internalType: "address payable",
+              name: "depositAddress",
+              type: "address",
+            },
+          ],
+          name: "CreateCampaign",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "GetCampaigns",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "Id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "Name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "Description",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "Goal",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address payable",
+                  name: "DepositAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "Open",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct Campaingn[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "GetCampaingn",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "Id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "Name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "Description",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "Goal",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address payable",
+                  name: "DepositAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "Open",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct Campaingn",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "GetCampaingnLength",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "GetLastId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "fundCampaign",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "getCampaignDeposit",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getContractBalance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "payCampaign",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+  11155111: {
+    CrowdFund: {
+      address: "0x2Fc1B7883daDd66F99c85e01DcF5112135fb2156",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CampaingnNotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Decimals_Exceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Insufficient_Balance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Transfer_Failed",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "reciever",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaid",
+              type: "uint256",
+            },
+          ],
+          name: "paidCampaign",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "description",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "goal",
+              type: "uint256",
+            },
+            {
+              internalType: "address payable",
+              name: "depositAddress",
+              type: "address",
+            },
+          ],
+          name: "CreateCampaign",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "GetCampaigns",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "Id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "Name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "Description",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "Goal",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address payable",
+                  name: "DepositAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "Open",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct Campaingn[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "GetCampaingn",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "Id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "Name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "Description",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "Goal",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address payable",
+                  name: "DepositAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "Open",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct Campaingn",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "GetCampaingnLength",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "GetLastId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "fundCampaign",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "getCampaignDeposit",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getContractBalance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "payCampaign",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;
